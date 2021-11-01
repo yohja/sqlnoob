@@ -21,12 +21,12 @@ $disks = Foreach ($server in $servers)
 	}
 }
 
-$DestInstance	= 'PHKTBPNW19SQLD2\G02D'
-$DestDb			= 'Sys_InfoDB'
-$DestUser		= 'sys_infodb'
-
-Import-Module ".\Modules\Set-DestinationPassword.psm1"
-$DestPass		= Set-DestinationPassword -ConfDir $ConfDir -PassFile "pfile.txt" -KeyFile "kfile.key"
+Import-Module ".\Modules\SqlNoobModule.psm1"
+$Destination			= Set-Destination -ConfDir $ConfDir -PassFile "pfile.txt" -KeyFile "kfile.key"
+$DestInstance			= $Destination.DestInstance
+$DestDb					= $Destination.DestDb
+$DestUser				= $Destination.DestUser
+$DestPass				= $Destination.DestPass
 
 $scred  				= New-Object -TypeName System.Data.SqlClient.SqlCredential($DestUser,$DestPass)
 $Conn					= New-Object System.Data.SqlClient.SqlConnection
