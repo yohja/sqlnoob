@@ -23,16 +23,15 @@ function Set-Destination {
 			Set-Destination -ConfDir "C:\DRV" -PassFile "PassFile.txt" -KeyFile "KeyFile.key"
 	#>
 	param (
-		[String] $ConfDir	= ".\conf",
-		[String] $KeyFile	= "kfile.key",
-		[String] $PassFile	= "pfile.txt"
+		[String] $ConfDir	= ".\conf"
 	)
 
-	$dfile			= $ConfDir + "\dfile.json"
-	$pfile			= $ConfDir + "\" + $PassFile
-	$kfile			= $ConfDir + "\" + $KeyFile
-
+	$dfile			= $ConfDir + "\config_file.json"
 	$dObject		= Get-Content $dfile | ConvertFrom-Json
+
+	$pfile			= $ConfDir + "\" + $dObject.Destination[0].PassFile
+	$kfile			= $ConfDir + "\" + $dObject.Destination[0].KeyFile
+
 	
 	$DestInstance	= $dObject.Destination[0].Instance
 	$DestDb			= $dObject.Destination[0].Database
@@ -44,11 +43,33 @@ function Set-Destination {
 	$value = New-Object PsObject -Property @{
 		DestInstance	= $DestInstance;
 		DestDb			= $DestDb;
-		DestUser		= $DestUser
+		DestUser		= $DestUser;
 		DestPass		= $DestPass
 	}
 
 	return $value;
+}
+
+function Get-ServerListFile {
+	param (
+		[String] $ConfDir	= ".\conf"
+	)
+	$dfile		= $ConfDir + "\config_file.json"
+	$dObject	= Get-Content $dfile | ConvertFrom-Json
+	$slist		= $ConfDir + "\" + $dObject.Destination[0].ServerList
+
+	return $slist
+}
+
+function Get-InstanceListFile {
+	param (
+		[String] $ConfDir	= ".\conf"
+	)
+	$dfile		= $ConfDir + "\config_file.json"
+	$dObject	= Get-Content $dfile | ConvertFrom-Json
+	$ilist		= $ConfDir + "\" + $dObject.Destination[0].InstanceList
+
+	return $ilist
 }
 
 function Add-EncryptedKeyFile {
