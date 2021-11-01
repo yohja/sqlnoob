@@ -29,13 +29,13 @@ function Set-Destination {
 	$dfile			= $ConfDir + "\config_file.json"
 	$dObject		= Get-Content $dfile | ConvertFrom-Json
 
-	$pfile			= $ConfDir + "\" + $dObject.Destination[0].PassFile
-	$kfile			= $ConfDir + "\" + $dObject.Destination[0].KeyFile
+	$pfile			= $ConfDir + "\" + $dObject.Destination.PassFile
+	$kfile			= $ConfDir + "\" + $dObject.Destination.KeyFile
 
 	
-	$DestInstance	= $dObject.Destination[0].Instance
-	$DestDb			= $dObject.Destination[0].Database
-	$DestUser		= $dObject.Destination[0].UserName
+	$DestInstance	= $dObject.Destination.Instance
+	$DestDb			= $dObject.Destination.Database
+	$DestUser		= $dObject.Destination.UserName
 	$DestPass		= Get-Content -Path $pfile | ConvertTo-SecureString -Key (Get-Content -Path $kfile)
 
 	$DestPass.MakeReadOnly()
@@ -56,7 +56,7 @@ function Get-ServerListFile {
 	)
 	$dfile		= $ConfDir + "\config_file.json"
 	$dObject	= Get-Content $dfile | ConvertFrom-Json
-	$slist		= $ConfDir + "\" + $dObject.Destination[0].ServerList
+	$slist		= $ConfDir + "\" + $dObject.Source.ServerList
 
 	return $slist
 }
@@ -67,7 +67,7 @@ function Get-InstanceListFile {
 	)
 	$dfile		= $ConfDir + "\config_file.json"
 	$dObject	= Get-Content $dfile | ConvertFrom-Json
-	$ilist		= $ConfDir + "\" + $dObject.Destination[0].InstanceList
+	$ilist		= $ConfDir + "\" + $dObject.Source.InstanceList
 
 	return $ilist
 }
