@@ -1,0 +1,13 @@
+{
+    "Destination": [
+        {
+            "Instance": "PHKTBPNW19SQLD2\\G02D",
+            "Database": "Sys_InfoDB",
+            "UserName": "sys_infodb",
+            "PassFile": "pfile.txt",
+            "KeyFile": "kfile.key",
+            "ServerList": "serverlist.txt",
+            "InstanceList": "instancelist.csv"
+        }
+    ]
+}
