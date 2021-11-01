@@ -4,29 +4,31 @@
 
 $RootDir	= Split-Path -parent $MyInvocation.MyCommand.Definition
 $ConfDir	= $RootDir + "\conf"
-$sFile		= $ConfDir + "\serverlist.txt"
-$servers	= Get-Content -Path  $sFile
+
+Import-Module ".\Modules\SqlNoobModule.psm1"
+$Destination	= Set-Destination -ConfDir $ConfDir
+$DestInstance	= $Destination.DestInstance
+$DestDb			= $Destination.DestDb
+$DestUser		= $Destination.DestUser
+$DestPass		= $Destination.DestPass
+
+
+$sFile			= Get-ServerListFile -ConfDir $ConfDir
+$servers		= Get-Content -Path  $sFile
 
 $disks = Foreach ($server in $servers)
 {
 	Get-WmiObject Win32_Volume -ComputerName $server -Filter "DriveType='3'" | ForEach-Object {
     New-Object PSObject -Property @{
-        HostName = $_.PSComputerName
-		VolumeLabel = $_.Label
-		MountPoint = $_.Name
-        VolumeSize = ([Math]::Round($_.Capacity /1MB,2))
-        FreeSpace = ([Math]::Round($_.FreeSpace /1MB,2))
+        HostName	= $_.PSComputerName
+		VolumeLabel	= $_.Label
+		MountPoint	= $_.Name
+        VolumeSize	= ([Math]::Round($_.Capacity /1MB,2))
+        FreeSpace	= ([Math]::Round($_.FreeSpace /1MB,2))
         
 		}
 	}
 }
-
-Import-Module ".\Modules\SqlNoobModule.psm1"
-$Destination			= Set-Destination -ConfDir $ConfDir -PassFile "pfile.txt" -KeyFile "kfile.key"
-$DestInstance			= $Destination.DestInstance
-$DestDb					= $Destination.DestDb
-$DestUser				= $Destination.DestUser
-$DestPass				= $Destination.DestPass
 
 $scred  				= New-Object -TypeName System.Data.SqlClient.SqlCredential($DestUser,$DestPass)
 $Conn					= New-Object System.Data.SqlClient.SqlConnection
