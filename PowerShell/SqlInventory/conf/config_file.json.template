@@ -1,0 +1,13 @@
+{
+    "Source": {
+        "ServerList": "serverlistfilename.txt",
+        "InstanceList": "instancelistfilename.txt"
+    },
+    "Destination": {
+            "Instance": "sqlinstancename",
+            "Database": "databasename",
+            "UserName": "username",
+            "PassFile": "encryptedpasswordfilename.txt",
+            "KeyFile": "encryptionkeyfilename.key"
+        }
+}
