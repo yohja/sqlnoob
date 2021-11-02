@@ -1,1 +1,0 @@
-Get-Process | Select-Object ProcessName,Id,CPU(s)
