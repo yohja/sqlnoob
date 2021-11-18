@@ -52,10 +52,6 @@ begin
 			,t.DefaultDatabase			= s.DefaultDatabase
 			,t.HashedPassword			= s.HashedPassword
 			,t.IsDisabled				= s.IsDisabled
-			,t.NeedNotification			= s.NeedNotification
-			,t.MaxPasswordAge			= s.MaxPasswordAge
-			,t.ExpirationThreshold		= s.ExpirationThreshold
-			,t.NotificationFrequency	= s.NotificationFrequency
 			,t.CreatedDate				= s.CreatedDate
 			,t.UpdatedDate				= s.UpdatedDate
 			,t.ModifiedDate				= getdate()
