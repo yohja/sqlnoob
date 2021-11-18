@@ -72,6 +72,38 @@ function Get-InstanceListFile {
 	return $ilist
 }
 
+
+function Get-InstanceList {
+	param (
+		[String] $ConfDir	= ".\conf"
+	)
+	$dfile		= $ConfDir + "\config_file.json"
+	$dObject	= Get-Content $dfile | ConvertFrom-Json
+	$slist		= $ConfDir + "\" + $dObject.Source.ServerList
+	$servers	= Get-Content -Path $slist
+	foreach ($server in $servers) {
+		#Get-Service -ComputerName $server | Where-Object {
+		#	($_.Name -eq 'MSSQLSERVER' -or $_.Name -like 'MSSQL$*') -and $_.DisplayName -like 'SQL Server*'
+		#}
+		$slists = Get-Service -ComputerName $server | Where-Object { $_.DisplayName -like "SQL Server (*" }
+		foreach($slist in $slists) {
+			if($slist.Name -eq "MSSQLSERVER") {
+				$inm = $server
+			}
+			else {
+				$sps = ($slist.Name).IndexOf("$")
+				$inm = $server + "\" + ($slist.Name).Substring($sps + 1)
+			}
+			New-Object PSObject -Property @{
+				HostName		= $server;
+				ServerInstance	= $inm
+			}
+		}
+		
+		#$slist.Name
+	}
+}
+
 function Add-EncryptedKeyFile {
 	param (
 		[Int] $ByteLength	= 32,
