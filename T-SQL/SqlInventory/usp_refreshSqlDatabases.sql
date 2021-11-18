@@ -1,4 +1,4 @@
-create procedure inv.usp_refreshSqlDatabases
+ALTER procedure [inv].[usp_refreshSqlDatabases]
     @HostName nvarchar(32)
 	,@FullInstanceName nvarchar(64)
 	,@DatabaseName nvarchar(128)
@@ -25,7 +25,7 @@ begin
 			,@DatabaseState DatabaseState
 			,@DatabaseSize DatabaseSize
 	)
-	merge inv.UserDatabases as t
+	merge inv.SqlDatabases as t
 	using
 	(
 		select

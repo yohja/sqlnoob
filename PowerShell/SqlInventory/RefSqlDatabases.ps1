@@ -65,7 +65,7 @@ foreach($item in $InstanceList)
 				$c.Open()
 				$cm = $c.CreateCommand()
 				$v1 = $result["HostName"]
-				$v2 = $result["ServerInstance"]
+				$v2 = $result["FullInstanceName"]
 				$v3 = $result["DatabaseName"]
 				$v4 = $result["FileOwner"]
 				$v5 = $result["CompatibilityLevel"]
@@ -75,8 +75,8 @@ foreach($item in $InstanceList)
 				$v9 = $result["DatabaseState"]
 				$v10 = $result["DatabaseSize"]
 				
-				$tmpComand = "EXEC [inv].[usp_refreshUserDatabases] '$v1','$v2','$v3','$v4',$v5,'$v6','$v7','$v8','$v9',$v10"
-
+				$tmpComand = "EXEC [inv].[usp_refreshSqlDatabases] '$v1','$v2','$v3','$v4',$v5,'$v6','$v7','$v8','$v9',$v10"
+#
 				#write-host $tmpComand
 				$cm.CommandText = $tmpComand
 				$cm.ExecuteNonQuery() | Out-Null
