@@ -3,3 +3,4 @@ PowerShell/SqlInventory/conf/pfile.txt
 PowerShell/SqlInventory/conf/kfile.key
 PowerShell/SqlInventory/conf/instancelist.csv
 PowerShell/SqlInventory/conf/config_file.json
+T-SQL/SqlInventory/InitialData.sql
